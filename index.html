@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 Boone Family Vacation</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Corporate Light Palette */
+            --bg-body: #f8f9fa;
+            --bg-card: #ffffff;
+            --primary-blue: #1a73e8; /* Google Blue */
+            --primary-dark: #0d47a1;
+            --accent-gold: #f9ab00; /* Subtle Gold for ratings */
+            --text-main: #202124;
+            --text-secondary: #5f6368;
+            --border-light: #dadce0;
+            --shadow-sm: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+            --shadow-md: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Hero Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .brand-container h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        .brand-container h2 {
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin: 0;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header-icon {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Section Styling */
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: 0.5rem;
+        }
+
+        .section-header i {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            margin-right: 1rem;
+            background: #e8f0fe;
+            padding: 10px;
+            border-radius: 50%;
+        }
+
+        .section-header h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+            color: var(--text-main);
+        }
+
+        /* Accordion Cards */
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 1px solid transparent;
+            transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            border-color: #e8eaed;
+        }
+
+        .accordion-trigger {
+            padding: 1.25rem 1.5rem;
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .accordion-trigger:hover {
+            background-color: #f1f3f4;
+        }
+
+        .accordion-trigger i {
+            color: var(--text-secondary);
+            transition: transform var(--transition-speed);
+        }
+
+        .accordion-trigger.active i {
+            transform: rotate(180deg);
+            color: var(--primary-blue);
+        }
+
+        .accordion-trigger.active {
+            color: var(--primary-blue);
+            background-color: #f8f9fa;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+            background-color: var(--bg-card);
+            padding: 0 1.5rem;
+        }
+
+        .accordion-content.open {
+            max-height: 2000px; /* Arbitrary large height */
+            padding-bottom: 1.5rem;
+            border-top: 1px solid var(--border-light);
+            opacity: 1;
+        }
+
+        /* Content Styling inside Accordions */
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-right: 8px;
+        }
+
+        .tag-blue { background: #e8f0fe; color: var(--primary-blue); }
+        .tag-gold { background: #ffeecf; color: #b06000; }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 10px;
+            margin-top: 10px;
+            font-size: 0.95rem;
+        }
+
+        .detail-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .stars { color: var(--accent-gold); }
+
+        ul {
+            padding-left: 1.2rem;
+            margin: 0.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        li { margin-bottom: 0.5rem; }
+
+        /* City Cards (Image-based) */
+        .city-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .city-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s;
+        }
+
+        .city-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .city-img {
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        /* Placeholder gradients since we can't upload real large files */
+        .img-saigon { background-image: url('https://images.unsplash.com/photo-1565576189975-30eb83e66012?q=80&w=800&auto=format&fit=crop'); }
+        .img-hk { background-image: url('https://images.unsplash.com/photo-1506318137071-a8bcbf6755dd?q=80&w=800&auto=format&fit=crop'); }
+        .img-macau { background-image: url('https://images.unsplash.com/photo-1532007271951-c47d8719b59f?q=80&w=800&auto=format&fit=crop'); }
+        .img-china { background-image: url('https://images.unsplash.com/photo-1533240509650-6a9b476eb33b?q=80&w=800&auto=format&fit=crop'); }
+
+        .city-content { padding: 1.5rem; }
+        .city-title { font-weight: 700; margin-bottom: 0.5rem; font-size: 1.1rem; }
+        .city-desc { font-size: 0.9rem; color: var(--text-secondary); }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background-color: var(--primary-blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-top: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover { background-color: var(--primary-dark); }
+        .btn i { margin-right: 8px; }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-light);
+            background: #fff;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .detail-grid { grid-template-columns: 1fr; }
+            .section-header h3 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-container">
+            <h1>Boone Family Vacation</h1>
+            <h2>Southeast & East Asia 2026</h2>
+        </div>
+        <div class="header-icon">
+            <i class="fas fa-paper-plane"></i>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="section-header">
+            <i class="fas fa-plane"></i>
+            <h3>Airlines</h3>
+        </div>
+
+        <div class="card">
+            <button class="accordion-trigger" onclick="toggleItem(this)">
+                <span><i class="fas fa-caret-right" style="margin-right:10px;"></i> Delta Airlines</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div style="padding-top: 1rem;">
+                    <span class="tag tag-blue">Primary Carrier</span>
+                    <p><strong>Route:</strong> Nashville (BNA) ↔ Ho Chi Minh City (SGN)</p>
+                    <p>As one of the world's most awarded airlines, Delta offers a premium transpacific experience. Expect industry-leading operational reliability and comfort.</p>
+                    <p><strong>Key Recognition:</strong></p>
+                    <ul>
+                        <li><i class="fas fa-trophy" style="color:gold;"></i> Top U.S. Airline (Wall Street Journal)</li>
+                        <li><i class="fas fa-trophy" style="color:gold;"></i> Best Business Class (North America)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <button class="accordion-trigger" onclick="toggleItem(this)">
+                <span><i class="fas fa-caret-right" style="margin-right:10px;"></i> Cathay Pacific</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div style="padding-top: 1rem;">
+                    <span class="tag tag-blue">Regional Carrier</span>
+                    <p><strong>Route:</strong> Vietnam ↔ Hong Kong</p>
+                    <p>Hong Kong's flag carrier is synonymous with luxury and Asian hospitality. Known for having one of the youngest fleets in the world and exceptional inflight dining.</p>
+                    <p><strong>Key Recognition:</strong></p>
+                    <ul>
+                        <li><i class="fas fa-trophy" style="color:gold;"></i> World's Top 5 Airlines (Skytrax)</li>
+                        <li><i class="fas fa-trophy" style="color:gold;"></i> Best Inflight Entertainment</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <i class="fas fa-bed"></i>
+            <h3>Accommodations</h3>
+        </div>
+
+        <div class="card">
+            <button class="accordion-trigger" onclick="toggleItem(this)">
+                Hilton Saigon (Vietnam)
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div style="padding-top: 1rem;">
+                    <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                    <span class="tag tag-gold" style="margin-left:10px;">Luxury</span>
+                    
+                    <div class="detail-grid">
+                        <div class="detail-label">Address</div>
+                        [cite_start]<div>11 Me Linh Square, Ben Nghe Ward, District 1, Ho Chi Minh City [cite: 12]</div>
+                        
+                        <div class="detail-label">About</div>
+                        <div>A brand-new 40-story tower opened in 2024, designed by Pierre-Yves Rochon. [cite_start]Located on the banks of the Saigon River. [cite: 14, 15]</div>
+                        
+                        <div class="detail-label">Amenities</div>
+                        <div>
+                            [cite_start]Rooftop Song Bar, 11th-floor outdoor pool, eforea Spa, Executive Lounge, Complimentary WiFi. [cite: 19-24]
+                        </div>
+                    </div>
+                    <a href="https://www.hilton.com/en/hotels/sgnhihi-hilton-saigon/" target="_blank" class="btn"><i class="fas fa-external-link-alt"></i> View Property</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <button class="accordion-trigger" onclick="toggleItem(this)">
+                Lanson Place Causeway Bay (Hong Kong)
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div style="padding-top: 1rem;">
+                    <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                    <span class="tag tag-gold" style="margin-left:10px;">Small Luxury Hotels</span>
+                    
+                    <div class="detail-grid">
+                        <div class="detail-label">Address</div>
+                        [cite_start]<div>133 Leighton Road, Causeway Bay, Hong Kong [cite: 27]</div>
+                        
+                        <div class="detail-label">About</div>
+                        <div>A serene sanctuary blending French elegance with Hong Kong hospitality. [cite_start]Walking distance to Times Square and SOGO. [cite: 32, 45]</div>
+                        
+                        <div class="detail-label">Amenities</div>
+                        <div>
+                            [cite_start]Kitchenettes with Nespresso, Dyson hairdryers, 24-hour fitness center, Smartphone with unlimited data. [cite: 38-42]
+                        </div>
+                    </div>
+                    <a href="https://lansonplace.com/causewaybay/" target="_blank" class="btn"><i class="fas fa-external-link-alt"></i> View Property</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <i class="fas fa-info-circle"></i>
+            <h3>Essential Information</h3>
+        </div>
+
+        <div class="card">
+            <button class="accordion-trigger" onclick="toggleItem(this)">
+                Visa & Entry Requirements
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <ul>
+                    <li><strong>Vietnam:</strong> U.S. citizens enter visa-free for up to 45 days (Verify current policies). [cite_start]Passport must be valid 6 months beyond arrival. [cite: 50-51]</li>
+                    [cite_start]<li><strong>Hong Kong:</strong> Visa-free for up to 90 days. [cite: 54]</li>
+                    [cite_start]<li><strong>China (Guangzhou/Shenzhen):</strong> 144-hour visa-free transit often available for specific ports/regions; otherwise, a tourist visa is required. [cite: 57]</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <button class="accordion-trigger" onclick="toggleItem(this)">
+                Currency & Payments
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="detail-grid">
+                    <div class="detail-label">Vietnam</div>
+                    <div><strong>VND (Dong)</strong>. ~25,000 VND = $1 USD. [cite_start]Cash is king for street food. [cite: 63]</div>
+                    
+                    <div class="detail-label">Hong Kong</div>
+                    <div><strong>HKD (Dollar)</strong>. ~7.8 HKD = $1 USD. [cite_start]Credit cards widely accepted. [cite: 64]</div>
+                    
+                    <div class="detail-label">China</div>
+                    <div><strong>CNY (Yuan)</strong>. ~7.2 CNY = $1 USD. [cite_start]Alipay/WeChat Pay are essential. [cite: 66, 77]</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <button class="accordion-trigger" onclick="toggleItem(this)">
+                Transportation
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="detail-grid">
+                    <div class="detail-label">Apps</div>
+                    [cite_start]<div><strong>Grab</strong> (Vietnam) and <strong>Uber</strong> (Hong Kong) are safe and reliable. [cite: 70]</div>
+                    
+                    <div class="detail-label">Transit Cards</div>
+                    [cite_start]<div><strong>Octopus Card</strong> (Hong Kong) is essential for MTR, buses, and convenience stores. [cite: 73]</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <i class="fas fa-map-marked-alt"></i>
+            <h3>Destinations</h3>
+        </div>
+
+        <div class="city-grid">
+            <div class="city-card">
+                <div class="city-img img-saigon"></div>
+                <div class="city-content">
+                    <div class="city-title">Ho Chi Minh City, Vietnam</div>
+                    <div class="city-desc">The high-octane commercial hub of Vietnam. [cite_start]Formerly Saigon, it blends French colonial architecture (Notre Dame Cathedral) with sleek skyscrapers and vibrant street life. [cite: 3, 95]</div>
+                </div>
+            </div>
+
+            <div class="city-card">
+                <div class="city-img img-hk"></div>
+                <div class="city-content">
+                    <div class="city-title">Hong Kong</div>
+                    <div class="city-desc">A global financial center where East meets West. Famous for its iconic skyline, Victoria Peak, and deep harbor. [cite_start]A culinary paradise from dim sum to fine dining. [cite: 3, 137]</div>
+                </div>
+            </div>
+
+            <div class="city-card">
+                <div class="city-img img-macau"></div>
+                <div class="city-content">
+                    <div class="city-title">Macau</div>
+                    <div class="city-desc">The "Las Vegas of Asia." [cite_start]A former Portuguese colony known for its casinos, the Ruins of St. Paul's, and unique Macanese cuisine (egg tarts). [cite: 158]</div>
+                </div>
+            </div>
+
+            <div class="city-card">
+                <div class="city-img img-china"></div>
+                <div class="city-content">
+                    <div class="city-title">Shenzhen & Guangzhou</div>
+                    <div class="city-desc">China's tech capital (Shenzhen) and the historic trading port of Canton (Guangzhou). [cite_start]Experience high-speed trains and modern marvels. [cite: 168, 177]</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <i class="far fa-calendar-check"></i>
+            <h3>Detailed Itinerary</h3>
+        </div>
+
+        <div class="card">
+            <button class="accordion-trigger" onclick="toggleItem(this)">
+                Phase 1: Vietnam (May 25-29)
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <ul style="list-style: none; padding-left: 0;">
+                    [cite_start]<li><strong>Day 1:</strong> Arrival & Check-in at Hilton Saigon. [cite: 96]</li>
+                    [cite_start]<li><strong>Day 2:</strong> District 1 Exploration (Walking Street, Opera House) & Ben Thanh Market. [cite: 103]</li>
+                    [cite_start]<li><strong>Day 3:</strong> War Remnants Museum, Notre Dame Cathedral & Dinner Cruise. [cite: 111]</li>
+                    [cite_start]<li><strong>Day 4:</strong> Cu Chi Tunnels Excursion & Bitexco Tower. [cite: 119]</li>
+                    [cite_start]<li><strong>Day 5:</strong> Jade Emperor Pagoda & Flight to Hong Kong. [cite: 127]</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <button class="accordion-trigger" onclick="toggleItem(this)">
+                Phase 2: Hong Kong & Region (May 29 - June 6)
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <ul style="list-style: none; padding-left: 0;">
+                    [cite_start]<li><strong>Day 6:</strong> Victoria Peak & Symphony of Lights. [cite: 138]</li>
+                    [cite_start]<li><strong>Day 7:</strong> Hong Kong Disneyland (Lantau Island). [cite: 148]</li>
+                    [cite_start]<li><strong>Day 8:</strong> Macau Day Trip (TurboJet Ferry). [cite: 157]</li>
+                    [cite_start]<li><strong>Day 9:</strong> Shenzhen Day Trip (Window of the World). [cite: 167]</li>
+                    [cite_start]<li><strong>Day 10:</strong> Guangzhou Day Trip (High-speed Train). [cite: 176]</li>
+                    [cite_start]<li><strong>Day 11:</strong> Lantau Island (Big Buddha & Tai O Fishing Village). [cite: 186]</li>
+                    [cite_start]<li><strong>Day 12:</strong> Kowloon Shopping (Ladies Market) & Sky100. [cite: 195]</li>
+                    [cite_start]<li><strong>Day 13:</strong> Morning Shopping & Return Flight to HCMC. [cite: 205]</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <button class="accordion-trigger" onclick="toggleItem(this)">
+                Phase 3: Conclusion (June 6-8)
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <ul style="list-style: none; padding-left: 0;">
+                    [cite_start]<li><strong>Day 14:</strong> Mekong Delta Day Trip (Boat ride & fruit tasting). [cite: 216]</li>
+                    [cite_start]<li><strong>Day 15:</strong> Leisure Breakfast & Departure to Nashville. [cite: 226]</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <i class="fas fa-lightbulb"></i>
+            <h3>Smart Travel Tips</h3>
+        </div>
+
+        <div class="card">
+            <button class="accordion-trigger" onclick="toggleItem(this)">
+                Packing, Safety & Etiquette
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="detail-grid">
+                    <div class="detail-label">Packing</div>
+                    [cite_start]<div>Light breathable clothes, Type G (HK) & Type A/C (Vietnam) adapters, Rain jacket. [cite: 234]</div>
+                    
+                    <div class="detail-label">Safety</div>
+                    <div>Drink bottled water only in Vietnam. [cite_start]Pickpockets in crowded areas. [cite: 242]</div>
+                    
+                    <div class="detail-label">Etiquette</div>
+                    <div>Remove shoes at temples. Dress modestly. [cite_start]Tipping is discretionary in HK (10%), not expected in Vietnam. [cite: 254]</div>
+
+                    <div class="detail-label">Food</div>
+                    <div><strong>Must Try:</strong> Pho, Banh Mi (Vietnam); [cite_start]Dim Sum, Roast Goose (Hong Kong). [cite: 266]</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Boone Family Vacation | Prepared for Executive Travel</p>
+    </footer>
+
+    <script>
+        function toggleItem(button) {
+            // Toggle 'active' class on button
+            button.classList.toggle('active');
+            
+            // Toggle 'open' class on content
+            const content = button.nextElementSibling;
+            content.classList.toggle('open');
+            
+            // Optional: Close other items (Accordion behavior)
+            /* const allContent = document.querySelectorAll('.accordion-content');
+            allContent.forEach(item => {
+                if (item !== content) {
+                    item.classList.remove('open');
+                    item.previousElementSibling.classList.remove('active');
+                }
+            });
+            */
+        }
+    </script>
+</body>
+</html>
